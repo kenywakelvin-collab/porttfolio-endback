@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BONVENTURE MAERA | ICT & Software Engineer Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --text: #e0e7ff;
+      --accent: #00f0ff;
+      --accent-dark: #00b7c3;
+      --card: #111827;
+      --gradient: linear-gradient(135deg, #667eea, #764ba2);
+      --logo-glow: rgba(255, 0, 0, 0.4); /* red M glow */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Logo Background - Fixed, Centered, Semi-Transparent */
+    .logo-bg {
+      position: fixed;
+      inset: 0;
+      background: url('https://your-image-host.com/bm-logo.png') center/contain no-repeat;
+      opacity: 0.08; /* very subtle so text is readable */
+      pointer-events: none;
+      z-index: -3;
+      animation: pulseGlow 8s infinite alternate;
+      filter: drop-shadow(0 0 30px var(--logo-glow)) brightness(1.2);
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.06; transform: scale(1); }
+      100% { opacity: 0.12; transform: scale(1.03); }
+    }
+
+    /* Existing animated background (kept for depth) */
+    .background {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 10% 20%, rgba(0,240,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -2;
+      animation: pulse 12s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; transform: scale(1); }
+      100% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 25s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.2); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-20vh) scale(0.8); opacity: 0; }
+    }
+
+    header {
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      animation: fadeInUp 1.2s ease-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 6rem);
+      margin-bottom: 0.5rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      margin: 1rem 0 2rem;
+      color: var(--accent);
+      font-weight: 300;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.4s;
+      box-shadow: 0 0 30px rgba(0,240,255,0.4);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0 50px rgba(0,240,255,0.7);
+      background: #fff;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10,14,23,0.7);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled {
+      padding: 1rem 5%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      margin-left: 2.5rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    section {
+      padding: 100px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .skills-grid, .about-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid rgba(0,240,255,0.1);
+      transition: all 0.4s;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-12px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0,240,255,0.15);
+    }
+
+    .skill-icon {
+      font-size: 3rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    /* Contact Form Styling */
+    #contactForm {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-width: 580px;
+      margin: 0 auto 3rem;
+    }
+
+    #contactForm input,
+    #contactForm textarea {
+      padding: 14px 18px;
+      border: 1px solid rgba(0, 240, 255, 0.18);
+      border-radius: 10px;
+      background: rgba(17, 24, 39, 0.6);
+      color: var(--text);
+      font-size: 1.05rem;
+      transition: all 0.3s;
+    }
+
+    #contactForm input:focus,
+    #contactForm textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
+      background: rgba(17, 24, 39, 0.9);
+    }
+
+    #contactForm textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    #contactForm button {
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.4s;
+      align-self: center;
+      box-shadow: 0 0 25px rgba(0,240,255,0.35);
+    }
+
+    #contactForm button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 45px rgba(0,240,255,0.6);
+      background: #ffffff;
+    }
+
+    #contactForm button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    #formStatus.success {
+      color: #00ff9d;
+    }
+    #formStatus.error {
+      color: #ff4d6a;
+    }
+
+    .social-icons a {
+      font-size: 2rem;
+      color: var(--text);
+      margin: 0 1rem;
+      transition: all 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+      transform: translateY(-5px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem;
+      background: #000;
+      font-size: 0.9rem;
+      color: #888;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo Background -->
+  <div class="logo-bg"></div>
+
+  <div class="background"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- HEADER / NAVIGATION -->
+  <nav id="navbar">
+    <div class="logo">BONVENTURE</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header>
+    <div class="hero-content">
+      <h1>BONVENTURE MAERA</h1>
+      <p class="subtitle">ICT Professional | Software Engineer | Problem Solver</p>
+      <p style="font-size:1.2rem; max-width:700px; margin:0 auto 2.5rem; opacity:0.9;">
+        Motivated graduate passionate about building efficient software solutions, robust networks, and innovative systems using modern technologies.
+      </p>
+      <a href="#contact" class="cta-btn">Get in Touch →</a>
+    </div>
+  </header>
+
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-content">
+      <div class="card">
+        <h3>Professional Summary</h3>
+        <p>A motivated ICT professional with a strong foundation in information and communication technology. Skilled in software engineering and eager to apply technical expertise in dynamic environments. Committed to leveraging knowledge in ICT to drive innovation and efficiency.</p>
+      </div>
+      <div class="card">
+        <h3>Education</h3>
+        <p><strong>BSc in Information & Communication Technology</strong><br>Jaramogi Oginga Odinga University of Science and Technology, Siaya County<br>Graduated ~2023</p>
+        <p>Relevant coursework: Software Development, Networking, Database Management</p>
+      </div>
+      <div class="card">
+        <h3>Experience</h3>
+        <p>Gained hands-on experience through volunteering in various organizations, applying ICT skills in real-world settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills" style="background: linear-gradient(to bottom, #0a0e17, #0f1624);">
+    <h2>My Skills</h2>
+    <div class="skills-grid">
+      <div class="card">
+        <div class="skill-icon"><i class="fas fa-code"></i></div>
+        <h3>Software Engineering</h3>
+        <p>Proficient in building scalable applications and solving complex problems.</p>
+      </div>
+      <div class="card">
+        <div class="skill-icon"><i class="fab fa-python"></i></div>
+        <h3>Python & Java</h3>
+        <p>Strong programming fundamentals with practical experience in both languages.</p>
+      </div>
+      <div class="card">
+        <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+        <h3>Networking</h3>
+        <p>Knowledge of network design, configuration, and troubleshooting.</p>
+      </div>
+      <div class="card">
+        <div class="skill-icon"><i class="fas fa-database"></i></div>
+        <h3>Database Management</h3>
+        <p>Designing, querying, and optimizing databases for performance.</p>
+      </div>
+      <div class="card">
+        <div class="skill-icon"><i class="fas fa-tools"></i></div>
+        <h3>Tools & Environments</h3>
+        <p>Familiar with modern development tools, IDEs, version control & ICT software.</p>
+      </div>
+      <div class="card">
+        <div class="skill-icon"><i class="fas fa-users"></i></div>
+        <h3>Soft Skills</h3>
+        <p>Problem-solving • Analytical thinking • Teamwork • Quick learner</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION with Form -->
+  <section id="contact" class="contact">
+    <h2>Let's Connect</h2>
+    <p style="font-size:1.3rem; margin-bottom:2.5rem; max-width: 600px; margin-left:auto; margin-right:auto;">
+      Open to opportunities in software development, ICT support, internships, or collaborations. Drop me a message!
+    </p>
+
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" placeholder="Your Message" required rows="6"></textarea>
+      <button type="submit" id="submitBtn">Send Message</button>
+      <p id="formStatus"></p>
+    </form>
+
+    <div style="margin:2rem 0; font-size:1.1rem;">
+      <p><strong>Phone:</strong> 0728690893</p>
+      <p><strong>Email:</strong> <a href="mailto:Bonymaers@gmail.com" style="color:var(--accent);">Bonymaers@gmail.com</a></p>
+      <p><strong>Location:</strong> Naivasha, Nakuru County, Kenya</p>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 BONVENTURE MAERA. Built with passion for technology.</p>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // Card reveal on scroll
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => observer.observe(card));
+
+    // Floating particles
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.width = `${Math.random() * 4 + 2}px`;
+      particle.style.height = particle.style.width;
+      particle.style.left = `${Math.random() * 100}vw`;
+      particle.style.animationDuration = `${Math.random() * 20 + 15}s`;
+      particle.style.animationDelay = `${Math.random() * 5}s`;
+      document.getElementById('particles').appendChild(particle);
+      setTimeout(() => particle.remove(), 30000);
+    }
+    setInterval(createParticle, 800);
+
+    // Contact Form Submission
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const statusEl = document.getElementById('formStatus');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      statusEl.textContent = '';
+      statusEl.className = '';
+
+      const data = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        message: document.getElementById('message').value.trim()
+      };
+
+      try {
+        const response = await fetch('http://localhost:5000/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          statusEl.textContent = result.message || 'Message sent successfully!';
+          statusEl.className = 'success';
+          document.getElementById('contactForm').reset();
+        } else {
+          throw new Error(result.detail || 'Failed to send message');
+        }
+      } catch (err) {
+        statusEl.textContent = err.message || 'Error sending message. Please try again later.';
+        statusEl.className = 'error';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+  </script>
+</body>
+</html>
